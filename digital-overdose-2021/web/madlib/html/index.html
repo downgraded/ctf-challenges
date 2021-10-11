@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Madlibs!</title>
+</head>
+<body>
+	<script>
+		function display(text){
+			var content = document.getElementById('content');
+			content.innerHTML = text;
+		}
+
+		function get_madlib(){
+			var x = document.getElementsByTagName('input');
+			const data = {
+				verb: x[0].value,
+				noun: x[1].value,
+				adjective: x[2].value,
+				person: x[3].value,
+				place: x[4].value,
+			};
+			fetch('/madlib', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}).then(response=>response.text().then(madlib=>display(madlib)));
+		};
+	</script>
+
+<div class="container card card-color">
+        <form action="javascript:get_madlib()" id="madlib-form">
+            <h2>Pick your words!</h2>
+            <div class="form-row">
+                <label for="verb">Pick a verb!</label>
+                <input type="text" class="input-text input-text-block w-100" id="verb" name="verb">
+            </div>
+            <div class="form-row">
+                <label for="noun">And a noun!</label>
+                <input type="text" class="input-text input-text-block w-100" id="noun" name="noun">
+            </div>
+            <div class="form-row">
+                <label for="adjective">And an adjective!</label>
+                <input type="text" class="input-text input-text-block w-100" id="adjective" name="adjective">
+            </div>
+            <div class="form-row">
+                <label for="person">And a person!</label>
+                <input type="text" class="input-text input-text-block w-100" id="person" name="person">
+            </div>
+            <div class="form-row">
+                <label for="place">And a place!</label>
+                <input type="text" class="input-text input-text-block w-100" id="place" name="place">
+            </div>
+            
+            <div class="form-row mx-auto">
+                <button type="submit" class="btn-submit" id="btnSubmit">
+                Submit
+                </button>
+            </div>
+        </form>
+      </div>
+<div id="madlib">
+	<p id="content">
+	</p>
+</div>
+</body>
+<footer>
+	<a href='/source'>source!</a>
+	<p> note: madlib template adapted from <a href='http://reddit.com/u/masterhacker_bot'>/u/masterhacker_bot</a>
+</html>
